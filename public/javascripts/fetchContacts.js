@@ -3,6 +3,7 @@ function showContacts( rows )   {
     console.log( rows );
     console.log('Show contacts');
     var contactsBox = document.getElementById('contactsBox');
+    contactsBox.innerHTML = '' ;
 
     console.log( contactsBox );
 
