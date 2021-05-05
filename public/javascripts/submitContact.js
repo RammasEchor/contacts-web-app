@@ -15,14 +15,14 @@ button.addEventListener('click', function (e) {
 
     var contactHasError = false ;
 
-    if( /\d/.test(name) )   {
-        var errorMsg = 'Name may not have numbers'
+    if( !name || /\d/.test(name) )   {
+        var errorMsg = 'Name required and may not have numbers'
         document.getElementById('errorTextName').innerText = errorMsg ;
         contactHasError = true ;
     }
 
-    if( /\d/.test(lastName) )   {
-        var errorMsg = 'Last Name may not have numbers' ;
+    if( !lastName || /\d/.test(lastName) )   {
+        var errorMsg = 'Last Name required and may not have numbers' ;
         document.getElementById('errorTextLastName').innerText = errorMsg ;
         contactHasError = true ;
     }
@@ -50,6 +50,12 @@ button.addEventListener('click', function (e) {
         fetchContacts();
         return ;
     }
+
+    document.getElementById('contactNameInput').value = '';
+    document.getElementById('lastNameInput').value = '';
+    document.getElementById('companyInput').value = '';
+    document.getElementById('phoneInput').value = '';
+    document.getElementById('emailInput').value = '';
 
     console.log('POST contact...');
     fetch('/db', {
