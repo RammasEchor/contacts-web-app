@@ -40,6 +40,14 @@ function showContacts( rows )   {
         column.innerText = rows[i].email ;
         columns.appendChild( column );
 
+        var column = document.createElement('p');
+        column.className = 'column'
+        var button = document.createElement('button');
+        button.className = 'is-warning';
+        button.innerText = 'Edit' ;
+        column.appendChild( button );
+        columns.appendChild( column );
+
         box.appendChild( columns );
         contactsBox.appendChild( box );
     }
