@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  script(src='/javascripts/fetchContacts.js')
   h1.title.is-1= title
   h6.title.is-6 Welcome to Luis Nieto's Contacts App
   div.columns
@@ -22,8 +23,6 @@ block content
         p(style='color:red').errorText#errorTextEmail
         input.input.box#emailInput
         button.button.is-info.is-fullwidth#createContact Create Contact
-
-        script(src='/javascripts/fetchContacts.js')
         script(src='/javascripts/submitContact.js')
 
     div.column
@@ -33,10 +32,5 @@ block content
             h5.title.is-5.block Search for people
           div.column
             input.input.is-info
-        div.box
-          div.columns.is-vcentered
-            p.column#name Test
-            p.column#lastName Test
-            p.column#company Test
-            p.column#phone Test
-            p.column#email Test@test.com
+
+    script(src='/javascripts/onLoad.js')

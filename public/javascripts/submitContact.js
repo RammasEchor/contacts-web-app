@@ -46,9 +46,12 @@ button.addEventListener('click', function (e) {
     }
 
     if( contactHasError )   {
+        console.log('Error in contact data.');
+        fetchContacts();
         return ;
     }
 
+    console.log('POST contact...');
     fetch('/db', {
         method: 'POST',
         headers: {
@@ -65,6 +68,7 @@ button.addEventListener('click', function (e) {
         })
     }).then((response) => {
         if( response.ok )   {
+            console.log('Contact posted.');
             fetchContacts();
         }
         else    {
