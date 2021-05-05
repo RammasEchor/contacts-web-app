@@ -46,7 +46,7 @@ router.get('/db', async function (req, res, next) {
     const queryString = `SELECT * FROM contacts`;
     const result = await client.query(queryString);
     const results = { 'results': (result) ? result.rows : null};
-    res.json({rows: results.rows});
+    res.json({rows: results});
     client.release();
   } catch (err) {
     console.error(err);
