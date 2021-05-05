@@ -1,6 +1,7 @@
 
 function showContacts( rows )   {
     console.log( rows );
+    var rows = rows.results ;
     console.log('Show contacts');
     var contactsBox = document.getElementById('contactsBox');
     contactsBox.innerHTML = '' ;
@@ -10,8 +11,6 @@ function showContacts( rows )   {
     for( i = 0 ; i < rows.length ; ++i )    {
         var box = document.createElement('div');
         box.className = 'box';
-
-        console.log( box );
 
         var columns = document.createElement('div');
         columns.className = 'columns is-vcentered' ;
