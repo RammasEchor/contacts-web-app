@@ -7,28 +7,36 @@ block content
     div.column.is-one-quarter
       div.box
         h6.title.is-6 Contact Name
-        p(style='color:red')#errorTextName
+        p(style='color:red').errorText#errorTextName
         input.input.is-primary.box#contactNameInput
         h6.title.is-6 Last Name
-        p(style='color:red')#errorTextLastName
+        p(style='color:red').errorText#errorTextLastName
         input.input.box#lastNameInput 
         h6.title.is-6 Company (Optional)
-        p(style='color:red')#errorTextCompany
+        p(style='color:red').errorText#errorTextCompany
         input.input.box#companyInput
         h6.title.is-6 Phone (Optional)
-        p(style='color:red')#errorTextPhone
+        p(style='color:red').errorText#errorTextPhone
         input.input.box#phoneInput
         h6.title.is-6 Email
-        p(style='color:red')#errorTextEmail
+        p(style='color:red').errorText#errorTextEmail
         input.input.box#emailInput
         button.button.is-info.is-fullwidth#createContact Create Contact
 
+        script(src='/javascripts/fetchContacts.js')
         script(src='/javascripts/submitContact.js')
 
     div.column
-      div.box
+      div.box#contactsBox
         div.columns.is-vcentered
           div.column.is-narrow
             h5.title.is-5.block Search for people
           div.column
             input.input.is-info
+        div.box
+          div.columns.is-vcentered
+            p.column#name Test
+            p.column#lastName Test
+            p.column#company Test
+            p.column#phone Test
+            p.column#email Test@test.com
