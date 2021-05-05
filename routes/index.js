@@ -36,24 +36,22 @@ router.post('/db', async function (req, res, next) {
       res.sendStatus(200);
     }
   });
+  client.release();
 
 });
 
 router.get('/db', async function (req, res, next) {
-  console.log(req.body);
-  const client = await pool.connect();
-  var queryString = `SELECT * FROM contacts`;
-  console.log(queryString);
-  query = client.query(queryString, (err, response) => {
-    if (err) {
-      console.log(err);
-      res.sendStatus(500);
-    }
-    else {
-      console.log( response.rows );
-      res.json({rows: response.rows});
-    }
-  });
+  try {
+    const client = await pool.connect();
+    const queryString = `SELECT * FROM contacts`;
+    const result = await client.query(queryString);
+    const results = { 'results': (result) ? result.rows : null};
+    res.json({rows: results.rows});
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
 });
 
 
