@@ -1,6 +1,7 @@
 extends layout
 
 block content
-  h1= title
+  h1#title= title
   p Welcome to #{title}
-  a.button.is-info Change title to "Encora"
+  a.button.is-info#toogle Change title to "Encora"
+  script(src='/javascripts/submitContact.js')
