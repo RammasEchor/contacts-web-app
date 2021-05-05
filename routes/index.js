@@ -25,24 +25,33 @@ const { Pool, Client } = require('pg')
 //   client.end()
 // })
 
+// console.log( req.body );
+//     const client = new Client({
+//       user: 'luis.nieto',
+//       host: 'localhost',
+//       database: 'luis.nieto',
+//       port: 5432,
+//     })
+//     client.connect()
+//     query = client.query('SELECT * FROM test', (err, table) => {
+//       console.log( table.rows )
+//       res.json( { rows : table.rows } )
+//       client.end()
+//   })
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Contacts App' });
 });
 
-router.get('/db', function(req, res, next) {
-    const client = new Client({
-      user: 'luis.nieto',
-      host: 'localhost',
-      database: 'luis.nieto',
-      port: 5432,
-    })
-    client.connect()
-    query = client.query('SELECT * FROM test', (err, table) => {
-      console.log( table.rows )
-      res.json( { rows : table.rows } )
-      client.end()
-  })
+router.post('/db', function(req, res, next) {
+    console.log( req.body );
+    if( req.body.newContact.name != 'Luis') {
+      res.sendStatus(500);
+      return ;
+    }
+
+    res.sendStatus(200);
 });
 
 module.exports = router;

@@ -1,7 +1,34 @@
 extends layout
 
 block content
-  h1#title= title
-  p Welcome to #{title}
-  a.button.is-info#toogle Change title to "Encora"
-  script(src='/javascripts/submitContact.js')
+  h1.title.is-1= title
+  h6.title.is-6 Welcome to Luis Nieto's Contacts App
+  div.columns
+    div.column.is-one-quarter
+      div.box
+        h6.title.is-6 Contact Name
+        p(style='color:red')#errorTextName
+        input.input.is-primary.box#contactNameInput
+        h6.title.is-6 Last Name
+        p(style='color:red')#errorTextLastName
+        input.input.box#lastNameInput 
+        h6.title.is-6 Company (Optional)
+        p(style='color:red')#errorTextCompany
+        input.input.box#companyInput
+        h6.title.is-6 Phone (Optional)
+        p(style='color:red')#errorTextPhone
+        input.input.box#phoneInput
+        h6.title.is-6 Email
+        p(style='color:red')#errorTextEmail
+        input.input.box#emailInput
+        button.button.is-info.is-fullwidth#createContact Create Contact
+
+        script(src='/javascripts/submitContact.js')
+
+    div.column
+      div.box
+        div.columns.is-vcentered
+          div.column.is-narrow
+            h5.title.is-5.block Search for people
+          div.column
+            input.input.is-info
