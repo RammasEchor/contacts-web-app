@@ -1,7 +1,7 @@
 
 function editContact(mail, button) {
     button.setAttribute('title', 'Disabled button');
-    button.disabled = true ;
+    button.disabled = true;
     var row = document.getElementById(mail).parentElement.parentElement;
     var elements = row.children;
     var contactInfo = [];
@@ -10,10 +10,10 @@ function editContact(mail, button) {
         contactInfo.push(elements[i].innerText);
     }
 
-    row.parentElement.appendChild(createEditControls(contactInfo));
+    row.parentElement.appendChild(createEditControls(contactInfo, mail));
 }
 
-function createEditControls(elements) {
+function createEditControls(elements, mail) {
     var rows = document.createElement('div');
 
     for (i = 0; i <= 4; ++i) {
@@ -34,7 +34,8 @@ function createEditControls(elements) {
     button.className = 'button is-warning';
     button.innerText = 'Save';
     button.setAttribute('id', elements[4]);
-    button.setAttribute('onclick', 'postEditedContact(this.id)');
+    button.setAttribute('title', mail);
+    button.setAttribute('onclick', 'postEditedContact(this)');
     column.className = 'column is-narrow';
     column.appendChild(button);
     div.appendChild(column);
@@ -53,18 +54,82 @@ function createEditControls(elements) {
     return rows;
 }
 
-function postEditedContact(mail) {
-    console.log(mail)
-}
+function postEditedContact(button) {
+    var row = document.getElementById(button.id).parentElement.parentElement.parentElement ;
+    var elements = row.children[1].children ;
 
-function validateInputs(mail) {
+    for( i = 0 ; i < 5 ; ++i )  {
+        elements[i].children[0].className = 'input' ;
+    }
 
+    var name = elements[0].children[0].value;
+    var lastName = elements[1].children[0].value;
+    var company = elements[2].children[0].value;
+    var phone = elements[3].children[0].value;
+    var email = elements[4].children[0].value;
+
+    var contactHasError = false;
+
+    if (!name || /\d/.test(name)) {
+        elements[0].children[0].className = 'input is-danger' ;
+        contactHasError = true;
+    }
+
+    if (!lastName || /\d/.test(lastName)) {
+        elements[1].children[0].className = 'input is-danger' ;
+        contactHasError = true;
+    }
+
+    if (company && !(/^[A-Za-z0-9]+$/.test(company))) {
+        elements[2].children[0].className = 'input is-danger' ;
+        contactHasError = true;
+    }
+
+    if (phone && !(/^[0-9]+$/.test(phone))) {
+        elements[3].children[0].className = 'input is-danger' ;
+        contactHasError = true;
+    }
+
+    if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))) {
+        elements[4].children[0].className = 'input is-danger' ;
+        contactHasError = true;
+    }
+
+    if (contactHasError) {
+        console.log('Error in contact data.');
+        return;
+    }
+
+    console.log('PATCH contact...');
+    fetch('/db', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            updatedContact: {
+                name: name,
+                lastName: lastName,
+                company: company,
+                phone: phone,
+                email: email,
+                originalEmail: button.id
+            }
+        })
+    }).then((response) => {
+        if( response.ok )   {
+            console.log('Contact modified.');
+            fetchContacts();
+        }
+        else    {
+            console.log( response );
+        }
+    });
 }
 
 function returnToNormal(mail) {
     var row = document.getElementById(mail).parentElement.parentElement;
     var elements = row.children;
-    console.log(row.children);
 
     var columns = document.createElement('div');
     columns.className = 'columns is-vcentered';
@@ -100,7 +165,7 @@ function returnToNormal(mail) {
     button.className = 'button is-warning is-light';
     button.innerText = 'Edit';
     button.setAttribute('id', elements[4].innerText);
-    button.setAttribute('onclick', 'editContact(this.id)');
+    button.setAttribute('onclick', 'editContact(this.id, this)');
     column.appendChild(button);
     columns.appendChild(column);
 
