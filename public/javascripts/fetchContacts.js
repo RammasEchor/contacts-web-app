@@ -1,11 +1,6 @@
 var contacts;
 
-<<<<<<< HEAD
-function showContacts( rows )   {
-    console.log( rows );
-    var rows = rows.results ;
-    console.log('Show contacts');
-=======
+
 function paginateContacts(page) {
     var startIndex = (page - 1) * 10;
     var contactsToShow = [];
@@ -20,7 +15,6 @@ function paginateContacts(page) {
 }
 
 function showContacts(rows) {
->>>>>>> localDatabase
     var contactsBox = document.getElementById('contactsBox');
     contactsBox.innerHTML = '';
 
@@ -59,10 +53,6 @@ function createNavigationButtons(rows) {
     var pagList = document.createElement('ul');
     pagList.setAttribute('class', 'pagination-list');
 
-<<<<<<< HEAD
-        var columns = document.createElement('div');
-        columns.className = 'columns is-vcentered' ;
-=======
     var page = 1;
     var item = document.createElement('li');
     var text = document.createElement('a');
@@ -85,7 +75,6 @@ function createNavigationButtons(rows) {
             pagList.appendChild(item);
         }
     }
->>>>>>> localDatabase
 
     pagination.appendChild(pagList);
     return pagination;
@@ -108,19 +97,6 @@ function createContact(row) {
     column.innerText = row.lastname;
     columns.appendChild(column);
 
-<<<<<<< HEAD
-        var column = document.createElement('p');
-        column.className = 'column'
-        var button = document.createElement('button');
-        button.className = 'is-warning';
-        button.innerText = 'Edit' ;
-        column.appendChild( button );
-        columns.appendChild( column );
-
-        box.appendChild( columns );
-        contactsBox.appendChild( box );
-    }
-=======
     var column = document.createElement('p');
     column.className = 'column is-2'
     column.innerText = row.company;
@@ -158,7 +134,6 @@ function createContact(row) {
 
     box.appendChild(columns);
     return box;
->>>>>>> localDatabase
 }
 
 function fetchContacts() {
