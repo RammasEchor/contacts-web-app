@@ -104,11 +104,13 @@ function createContact(row) {
 
     var column = document.createElement('p');
     column.className = 'column is-2'
+    column.style.wordWrap = 'break-word';
     column.innerText = row.phone;
     columns.appendChild(column);
 
     var column = document.createElement('p');
     column.className = 'column is-2'
+    column.style.wordWrap = 'break-word';
     column.innerText = row.email;
     columns.appendChild(column);
 
