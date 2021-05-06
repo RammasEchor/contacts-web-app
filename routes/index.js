@@ -10,6 +10,15 @@ const pool = new Pool({
 });
 
 
+function getClient()  {
+  return client = new Client({
+    user: 'luis.nieto',
+    host: 'localhost',
+    database: 'contacts',
+    port: 5432,
+  });
+}
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Contacts App' });
@@ -28,6 +37,7 @@ router.post('/db', async function (req, res, next) {
                         VALUES ('${0}', '${name}', '${lastName}', '${company}', '${phone}', '${email}')`;
 
   client.query(queryString, (err, response) => {
+
     if (err) {
       console.log(err);
       res.sendStatus(500);
@@ -52,6 +62,35 @@ router.get('/db', async function (req, res, next) {
     console.error(err);
     res.send("Error " + err);
   }
+});
+
+router.patch('/db', function (req, res, next) {
+  console.log(req.body);
+
+  var name = req.body.updatedContact.name;
+  var lastName = req.body.updatedContact.lastName;
+  var company = req.body.updatedContact.company;
+  var phone = req.body.updatedContact.phone;
+  var email = req.body.updatedContact.email;
+  var originalEmail = req.body.updatedContact.originalEmail;
+
+  const query = `UPDATE contacts SET (name,lastname,company,phone,email) =
+                  ('${name}','${lastName}','${company}','${phone}','${email}')
+                  WHERE email = '${originalEmail}'`;
+
+  const client = getClient();
+  client.connect()
+  console.log(query);
+  client.query(query, (err, response) => {
+    if (err) {
+      console.log(err);
+      console.log( response );
+      res.sendStatus(500);
+    }
+    else {
+      res.sendStatus(200);
+    }
+  });
 });
 
 
