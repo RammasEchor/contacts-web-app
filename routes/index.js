@@ -40,7 +40,7 @@ router.post('/db', async function (req, res, next) {
 router.get('/db', async function (req, res, next) {
   try {
     const client = await pool.connect();
-    const queryString = `SELECT * FROM contacts`;
+    const queryString = `SELECT * FROM contacts ORDER BY name`;
     const result = await client.query(queryString);
     const results = { 'results': (result) ? result.rows : null };
     res.json({ rows: results });
@@ -54,19 +54,25 @@ router.get('/db', async function (req, res, next) {
 router.patch('/db', async function (req, res, next) {
   console.log(req.body);
 
-  var name = req.body.updatedContact.name;
-  var lastName = req.body.updatedContact.lastName;
-  var company = req.body.updatedContact.company;
-  var phone = req.body.updatedContact.phone;
-  var email = req.body.updatedContact.email;
-  var originalEmail = req.body.updatedContact.originalEmail;
+  if( !req.body.updatedContact.delete ) {
+    var name = req.body.updatedContact.name;
+    var lastName = req.body.updatedContact.lastName;
+    var company = req.body.updatedContact.company;
+    var phone = req.body.updatedContact.phone;
+    var email = req.body.updatedContact.email;
+    var originalEmail = req.body.updatedContact.originalEmail;
+    var query = `UPDATE contacts SET (name,lastname,company,phone,email) =
+                  ('${name}','${lastName}','${company}','${phone}','${email}')
+                  WHERE email = '${originalEmail}'`;
+  }
+  else  {
+    var mail = req.body.updatedContact.mail;
+    var query = `DELETE FROM contacts WHERE email = '${mail}'`;
+  }
 
   try {
     const client = await pool.connect();
-    const queryString = `UPDATE contacts SET (name,lastname,company,phone,email) =
-                          ('${name}','${lastName}','${company}','${phone}','${email}')
-                          WHERE email = '${originalEmail}'`;
-    const result = await client.query(queryString);
+    const result = await client.query(query);
     const results = { 'results': (result) ? result.rows : null };
     res.json({ rows: results });
     client.release();
