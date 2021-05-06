@@ -145,7 +145,7 @@ function fetchContacts() {
     }).then((response) => {
         return response.json();
     }).then((res) => {
-        contacts = res.results.rows;
+        contacts = res.rows.results;
         paginateContacts(1);
     }).catch((err) => {
         console.log('Fetch error: ' + err);
