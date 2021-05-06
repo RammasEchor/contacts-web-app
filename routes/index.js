@@ -31,7 +31,7 @@ router.post('/db', function (req, res, next) {
                         VALUES ('${0}', '${name}', '${lastName}', '${company}', '${phone}', '${email}')`;
 
   console.log(queryString);
-  lient.query(queryString, (err, response) => {
+  client.query(queryString, (err, response) => {
     if (err) {
       console.log(err);
       res.sendStatus(500);

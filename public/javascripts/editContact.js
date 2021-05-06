@@ -80,7 +80,7 @@ function postEditedContact(button) {
         contactHasError = true;
     }
 
-    if (company && !(/^[A-Za-z0-9]+$/.test(company))) {
+    if (company && !(/^[A-Za-z0-9\s]+$/.test(company))) {
         elements[2].children[0].className = 'input is-danger' ;
         contactHasError = true;
     }
