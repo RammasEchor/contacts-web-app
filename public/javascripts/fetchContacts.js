@@ -117,7 +117,7 @@ function createContact(row) {
     button.className = 'button is-warning is-light';
     button.innerText = 'Edit';
     button.setAttribute('id', row.email);
-    button.setAttribute('onclick', 'editContact(this.id)');
+    button.setAttribute('onclick', 'editContact(this.id,this)');
     column.appendChild(button);
     columns.appendChild(column);
 

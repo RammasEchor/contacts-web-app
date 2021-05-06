@@ -1,7 +1,8 @@
 
-function editContact(mail) {
+function editContact(mail, button) {
+    button.setAttribute('title', 'Disabled button');
+    button.disabled = true ;
     var row = document.getElementById(mail).parentElement.parentElement;
-    console.log(row);
     var elements = row.children;
     var contactInfo = [];
 
@@ -9,54 +10,21 @@ function editContact(mail) {
         contactInfo.push(elements[i].innerText);
     }
 
-    // row.innerHTML = '';
     row.parentElement.appendChild(createEditControls(contactInfo));
 }
 
 function createEditControls(elements) {
-    console.log(elements);
-
     var rows = document.createElement('div');
 
-    var div = document.createElement('div');
-    var column = document.createElement('input');
-    column.className = 'input'
-    column.value = elements[0];
-    div.className = 'block';
-    div.appendChild(column);
-    rows.appendChild(div);
-
-    var div = document.createElement('div');
-    var column = document.createElement('input');
-    column.className = 'input box'
-    column.value = elements[1];
-    div.className = 'block';
-    div.appendChild(column);
-    rows.appendChild(div);
-
-    var div = document.createElement('div');
-    var column = document.createElement('input');
-    column.className = 'input box'
-    column.value = elements[2];
-    div.className = 'block';
-    div.appendChild(column);
-    rows.appendChild(div);
-
-    var div = document.createElement('div');
-    var column = document.createElement('input');
-    column.className = 'input box'
-    column.value = elements[3];
-    div.className = 'block';
-    div.appendChild(column);
-    rows.appendChild(div);
-
-    var div = document.createElement('div');
-    var column = document.createElement('input');
-    column.className = 'input box'
-    column.value = elements[4];
-    div.className = 'block';
-    rows.appendChild(column);
-    div.appendChild(column);
+    for (i = 0; i <= 4; ++i) {
+        var div = document.createElement('div');
+        var column = document.createElement('input');
+        column.className = 'input'
+        column.value = elements[i];
+        div.className = 'block';
+        div.appendChild(column);
+        rows.appendChild(div);
+    }
 
     var div = document.createElement('div');
     div.className = 'columns is-vcentered'
@@ -67,7 +35,7 @@ function createEditControls(elements) {
     button.innerText = 'Save';
     button.setAttribute('id', elements[4]);
     button.setAttribute('onclick', 'postEditedContact(this.id)');
-    column.className = 'column' ;
+    column.className = 'column is-narrow';
     column.appendChild(button);
     div.appendChild(column);
 
@@ -77,11 +45,11 @@ function createEditControls(elements) {
     button.innerText = 'Cancel';
     button.setAttribute('id', elements[4]);
     button.setAttribute('onclick', 'returnToNormal(this.id)');
-    column.className = 'column' ;
+    column.className = 'column';
     column.appendChild(button);
     div.appendChild(column);
 
-    rows.appendChild( div );
+    rows.appendChild(div);
     return rows;
 }
 
@@ -89,37 +57,41 @@ function postEditedContact(mail) {
     console.log(mail)
 }
 
+function validateInputs(mail) {
+
+}
+
 function returnToNormal(mail) {
     var row = document.getElementById(mail).parentElement.parentElement;
     var elements = row.children;
-    console.log(elements);
+    console.log(row.children);
 
     var columns = document.createElement('div');
     columns.className = 'columns is-vcentered';
 
     var column = document.createElement('p');
     column.className = 'column is-1'
-    column.innerText = elements[0].value;
+    column.innerText = elements[0].innerText;
     columns.appendChild(column);
 
     var column = document.createElement('p');
     column.className = 'column is-1'
-    column.innerText = elements[1].value;
+    column.innerText = elements[1].innerText;
     columns.appendChild(column);
 
     var column = document.createElement('p');
     column.className = 'column is-2'
-    column.innerText = elements[2].value;
+    column.innerText = elements[2].innerText;
     columns.appendChild(column);
 
     var column = document.createElement('p');
     column.className = 'column is-2'
-    column.innerText = elements[3].value;
+    column.innerText = elements[3].innerText;
     columns.appendChild(column);
 
     var column = document.createElement('p');
     column.className = 'column is-2'
-    column.innerText = elements[4].value;
+    column.innerText = elements[4].innerText;
     columns.appendChild(column);
 
     var column = document.createElement('p');
@@ -127,7 +99,7 @@ function returnToNormal(mail) {
     var button = document.createElement('button');
     button.className = 'button is-warning is-light';
     button.innerText = 'Edit';
-    button.setAttribute('id', elements[4].value);
+    button.setAttribute('id', elements[4].innerText);
     button.setAttribute('onclick', 'editContact(this.id)');
     column.appendChild(button);
     columns.appendChild(column);
@@ -137,11 +109,12 @@ function returnToNormal(mail) {
     var button = document.createElement('button');
     button.className = 'button is-danger is-light';
     button.innerText = 'Delete';
-    button.setAttribute('id', elements[4].value);
+    button.setAttribute('id', elements[4].innerText);
     button.setAttribute('onclick', 'deleteContact(this.id)');
     column.appendChild(button);
     columns.appendChild(column);
 
-    row.innerHTML = '';
-    row.appendChild(columns);
+    var parent = row.parentElement;
+    parent.innerHTML = '';
+    parent.appendChild(columns);
 }
