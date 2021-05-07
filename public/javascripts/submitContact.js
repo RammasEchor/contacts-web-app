@@ -78,7 +78,9 @@ button.addEventListener('click', function (e) {
             fetchContacts();
         }
         else    {
-            console.log( response );
+            response.json().then( (data) => {
+                console.log( data );
+            });
         }
     });
 });
