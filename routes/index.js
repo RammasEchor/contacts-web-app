@@ -57,7 +57,7 @@ router.post('/db', async function (req, res, next) {
     client.release();
   } catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({error: err});
   }
 
 });
@@ -72,7 +72,7 @@ router.get('/db', async function (req, res, next) {
     client.release();
   } catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    res.send(err);
   }
 });
 
@@ -129,7 +129,7 @@ router.patch('/db', async function (req, res, next) {
     client.release();
   } catch (err) {
     console.error(err);
-    res.send(err);
+    res.status(500).send(err);
   }
 });
 
