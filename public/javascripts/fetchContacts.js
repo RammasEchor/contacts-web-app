@@ -153,3 +153,60 @@ function fetchContacts() {
         console.log('Fetch error: ' + err);
     });
 }
+
+// Filter input
+const filterInput = document.getElementById('filterInput')
+filterInput.addEventListener('focusin', startTrackingKey);
+filterInput.addEventListener('focusout', stopTrackingKeys);
+
+function startTrackingKey(event) {
+    const filterInput = document.getElementById('filterInput');
+    filterInput.addEventListener('keyup', handleKeyPressed);
+}
+
+function stopTrackingKeys(event) {
+    const filterInput = document.getElementById('filterInput');
+    filterInput.removeEventListener('keyup', handleKeyPressed);
+}
+
+async function handleKeyPressed(event) {
+    const filterInput = document.getElementById('filterInput');
+    const regexFilter = filterInput.value ;
+
+    console.log( regexFilter );
+
+    const allContacts = await fetchContactsToFilter();
+    contacts = filterContacts( allContacts, regexFilter );
+    paginateContacts(1);
+}
+
+async function fetchContactsToFilter()    {
+    let cont = await fetch('/db', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => {
+        return response.json();
+    }).then((res) => {
+        return res.rows;
+    }).catch((err) => {
+        console.log('Fetch error: ' + err);
+    });
+
+    return cont ;
+}
+
+function filterContacts( contacts, regex )   {
+    console.log( regex );
+    let filteredContacts = contacts.filter( (contact) => {
+        if( contact.name.includes(regex) )
+            return true
+        else if( contact.lastname.includes( regex ))
+            return true ;
+
+        return false ;
+    });
+
+    return filteredContacts ; 
+}

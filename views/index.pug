@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  script(src='/javascripts/fetchContacts.js')
   h1.title.is-1= title
   h6.title.is-6 Welcome to Luis Nieto's Contacts App
   div.columns
@@ -31,9 +30,10 @@ block content
           div.column.is-narrow
             h4.title.is-4.block Search for people
           div.column
-            //- input.input.is-info
+            input.input.is-info#filterInput
         div#contactsBox
 
-    script(src='/javascripts/onLoad.js')
+    script(src='/javascripts/fetchContacts.js')
     script(src='/javascripts/editContact.js')
     script(src='/javascripts/deleteContact.js')
+    script(src='/javascripts/onLoad.js')
