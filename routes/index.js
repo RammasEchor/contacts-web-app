@@ -16,6 +16,8 @@ router.get('/', function (req, res, next) {
 
 router.post('/db', async function (req, res, next) {
   console.log(req.body);
+  console.log( 'here' );
+
   var name = req.body.newContact.name;
   var lastName = req.body.newContact.lastName;
   var company = req.body.newContact.company;
@@ -25,32 +27,22 @@ router.post('/db', async function (req, res, next) {
   var contactHasError = false ;
 
   if( !name || /\d/.test(name) )   {
-    var errorMsg = 'Name required and may not have numbers'
-    document.getElementById('errorTextName').innerText = errorMsg ;
-    contactHasError = true ;
+      contactHasError = true ;
   }
 
   if( !lastName || /\d/.test(lastName) )   {
-      var errorMsg = 'Last Name required and may not have numbers' ;
-      document.getElementById('errorTextLastName').innerText = errorMsg ;
       contactHasError = true ;
   }
 
   if( company && !(/^[A-Za-z0-9\s]+$/.test(company)) )    {
-      var errorMsg = 'Company may be empty, but may not have symbols' ;
-      document.getElementById('errorTextCompany').innerText = errorMsg ;
       contactHasError = true ;
   }
 
   if( phone && !(/^[0-9]+$/.test(phone)) )    {
-      var errorMsg = 'Phone may be empty, or only be numbers' ;
-      document.getElementById('errorTextPhone').innerText = errorMsg ;
       contactHasError = true ;
   }
 
   if( !(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) ) {
-      var errorMsg = 'Is not a valid email address' ;
-      document.getElementById('errorTextEmail').innerText = errorMsg ;
       contactHasError = true ;
   }
 
@@ -64,12 +56,13 @@ router.post('/db', async function (req, res, next) {
     var queryString = `INSERT INTO contacts(userId, name, lastName, company, phone, email) 
                         VALUES ('${0}', '${name}', '${lastName}', '${company}', '${phone}', '${email}')`;
     const result = await client.query(queryString);
+    console.log( queryString );
     const results = { 'results': (result) ? result.rows : null };
     res.json({ rows: results });
     client.release();
   } catch (err) {
-    console.error(err);
-    res.send("Error " + err);
+    console.error("LOOK: " + err);
+    res.status(500).send("Error: " + err);
   }
 
 });
