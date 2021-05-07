@@ -24,31 +24,30 @@ router.post('/db', async function (req, res, next) {
   var phone = req.body.newContact.phone;
   var email = req.body.newContact.email;
 
-  var contactHasError = false ;
 
   if( !name || /\d/.test(name) )   {
-      contactHasError = true ;
+    res.status(500).send(`Error in name: ${name}`);
+    return ;
   }
 
   if( !lastName || /\d/.test(lastName) )   {
-      contactHasError = true ;
+    res.status(500).send(`Error in lastName: ${lastName}`);
+    return ;
   }
 
   if( company && !(/^[A-Za-z0-9\s]+$/.test(company)) )    {
-      contactHasError = true ;
+    res.status(500).send(`Error in company: ${company}`);
+    return ;
   }
 
   if( phone && !(/^[0-9]+$/.test(phone)) )    {
-      contactHasError = true ;
+    res.status(500).send(`Error in phone: ${phone}`);
+    return ;
   }
 
   if( !(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) ) {
-      contactHasError = true ;
-  }
-
-  if( contactHasError )   {
-      console.log('Error in contact data.');
-      res.status(500).send('Ha; try again.');
+    res.status(500).send(`Error in email: ${email}`);
+    return ;
   }
 
   try {
