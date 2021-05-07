@@ -79,6 +79,7 @@ button.addEventListener('click', function (e) {
         }
         else    {
             console.log( response );
+            console.log("here");
             window.alert("One of the fields is too large");
         }
     });
