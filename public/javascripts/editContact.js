@@ -122,7 +122,7 @@ function postEditedContact(button) {
             fetchContacts();
         }
         else    {
-            response.json().then( (data) => {
+            response.json().then( (error) => {
                 console.log( error );
                 if( error.code == '22001' ) {
                     window.alert('One of the fields is too large');
