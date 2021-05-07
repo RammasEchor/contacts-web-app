@@ -78,8 +78,14 @@ button.addEventListener('click', function (e) {
             fetchContacts();
         }
         else    {
-            response.json().then( (data) => {
-                console.log( data );
+            response.json().then( (error) => {
+                console.log( error );
+                if( error.code == '22001' ) {
+                    window.alert('One of the fields is too large');
+                }
+                else if( error.code == '23505' )    {
+                    window.alert('Phone/email already exists');
+                }
             });
         }
     });
