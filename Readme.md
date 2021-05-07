@@ -12,14 +12,14 @@ Validation for this are done in the frontend, backend and constraints in the dat
 
 ## Tools
 
-- Node.js for the backend and the frontend.
-- Bulma as a css framework.
-- Postgresql as the database.
-- Deployment in Heroku.
+- *Node.js* with *Express* for the backend and the frontend.
+- *Bulma* as css framework.
+- *Postgresql* as the database.
+- Deployment in *Heroku*.
 
 ## API
 
-I have four (4) endpoints:
+Four (4) endpoints:
 
 - `GET '/'`: This fetches the main webpage.
 - `GET '/db'`: Fetches all the contacts.
@@ -27,3 +27,9 @@ I have four (4) endpoints:
 - `PATCH '/db`: Tries to modify/delete a contact.
 
 The payload is sent as a json.
+
+## Characteristics
+
+- Create, modify, and delete contacts
+- Pagination of 10 contacts per page
+- Filter by name/last name (one string filters for both).
