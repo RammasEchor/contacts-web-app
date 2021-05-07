@@ -12,6 +12,18 @@ function paginateContacts(page) {
     showContacts(contactsToShow);
     var navigation = createNavigationButtons(contacts);
     contactsBox.appendChild(navigation);
+
+    var navButtons = document.getElementsByClassName('pagination-link');
+    console.log(navButtons);
+
+    for( i = 0 ; i < navButtons.length ; ++ i ) {
+        if( navButtons[i].innerText == page )   {
+            navButtons[i].className = 'pagination-link is-current';
+        }
+        else    {
+            navButtons[i].className = 'pagination-link';
+        }
+    }
 }
 
 function showContacts(rows) {
