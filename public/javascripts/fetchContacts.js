@@ -189,7 +189,7 @@ async function fetchContactsToFilter()    {
     }).then((response) => {
         return response.json();
     }).then((res) => {
-        return res.rows;
+        return res.rows.results ;
     }).catch((err) => {
         console.log('Fetch error: ' + err);
     });
