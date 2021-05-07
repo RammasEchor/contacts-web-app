@@ -97,6 +97,8 @@ router.patch('/db', async function (req, res, next) {
     var email = req.body.updatedContact.email;
     var originalEmail = req.body.updatedContact.originalEmail;
 
+    var contactHasError = false ;
+
     if( !name || /\d/.test(name) )   {
       var errorMsg = 'Name required and may not have numbers'
       document.getElementById('errorTextName').innerText = errorMsg ;
