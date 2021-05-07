@@ -123,6 +123,7 @@ function postEditedContact(button) {
         }
         else    {
             console.log( response );
+            window.alert("One of the fields is too large");
         }
     });
 }

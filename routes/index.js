@@ -15,11 +15,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/db', async function (req, res, next) {
-  console.log(req.body);
-
   var newContact = req.body.newContact;
-  console.log(newContact);
-
   var name = newContact.name
   var lastName = newContact.lastName;
   var company = newContact.company;
@@ -56,13 +52,12 @@ router.post('/db', async function (req, res, next) {
     var queryString = `INSERT INTO contacts(userId, name, lastName, company, phone, email) 
                         VALUES ('${0}', '${name}', '${lastName}', '${company}', '${phone}', '${email}')`;
     const result = await client.query(queryString);
-    console.log(queryString);
     const results = { 'results': (result) ? result.rows : null };
     res.json({ rows: results });
     client.release();
   } catch (err) {
-    console.error("LOOK: " + err);
-    res.status(500).send("Error: " + err);
+    console.error(err);
+    res.status(500).send(err);
   }
 
 });
@@ -92,41 +87,29 @@ router.patch('/db', async function (req, res, next) {
     var email = req.body.updatedContact.email;
     var originalEmail = req.body.updatedContact.originalEmail;
 
-    var contactHasError = false;
-
     if (!name || /\d/.test(name)) {
-      var errorMsg = 'Name required and may not have numbers'
-      document.getElementById('errorTextName').innerText = errorMsg;
-      contactHasError = true;
+      res.status(500).send(`Error in name: ${name}`);
+      return;
     }
 
     if (!lastName || /\d/.test(lastName)) {
-      var errorMsg = 'Last Name required and may not have numbers';
-      document.getElementById('errorTextLastName').innerText = errorMsg;
-      contactHasError = true;
+      res.status(500).send(`Error in lastName: ${lastName}`);
+      return;
     }
 
     if (company && !(/^[A-Za-z0-9\s]+$/.test(company))) {
-      var errorMsg = 'Company may be empty, but may not have symbols';
-      document.getElementById('errorTextCompany').innerText = errorMsg;
-      contactHasError = true;
+      res.status(500).send(`Error in company: ${company}`);
+      return;
     }
 
     if (phone && !(/^[0-9]+$/.test(phone))) {
-      var errorMsg = 'Phone may be empty, or only be numbers';
-      document.getElementById('errorTextPhone').innerText = errorMsg;
-      contactHasError = true;
+      res.status(500).send(`Error in phone: ${phone}`);
+      return;
     }
 
     if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))) {
-      var errorMsg = 'Is not a valid email address';
-      document.getElementById('errorTextEmail').innerText = errorMsg;
-      contactHasError = true;
-    }
-
-    if (contactHasError) {
-      console.log('Error in contact data.');
-      res.status(500).send('Ha; try again.');
+      res.status(500).send(`Error in email: ${email}`);
+      return;
     }
 
     var query = `UPDATE contacts SET (name,lastname,company,phone,email) =
@@ -146,7 +129,7 @@ router.patch('/db', async function (req, res, next) {
     client.release();
   } catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    res.send(err);
   }
 });
 
