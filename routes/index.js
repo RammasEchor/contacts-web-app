@@ -22,6 +22,8 @@ router.post('/db', async function (req, res, next) {
   var phone = req.body.newContact.phone;
   var email = req.body.newContact.email;
 
+  var contactHasError = false ;
+
   if( !name || /\d/.test(name) )   {
     var errorMsg = 'Name required and may not have numbers'
     document.getElementById('errorTextName').innerText = errorMsg ;
