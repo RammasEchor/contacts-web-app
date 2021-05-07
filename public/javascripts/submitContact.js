@@ -27,7 +27,7 @@ button.addEventListener('click', function (e) {
         contactHasError = true ;
     }
 
-    if( company && !(/^[A-Za-z0-9\s]+$/.test(company)) )    {
+    if( company && !(/^[A-Za-z0-9\s\.]+$/.test(company)) )    {
         var errorMsg = 'Company may be empty, but may not have symbols' ;
         document.getElementById('errorTextCompany').innerText = errorMsg ;
         contactHasError = true ;
