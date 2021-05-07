@@ -16,14 +16,15 @@ router.get('/', function (req, res, next) {
 
 router.post('/db', async function (req, res, next) {
   console.log(req.body);
-  console.log( 'here' );
 
-  var name = req.body.newContact.name;
-  var lastName = req.body.newContact.lastName;
-  var company = req.body.newContact.company;
-  var phone = req.body.newContact.phone;
-  var email = req.body.newContact.email;
+  var newContact = req.body('newContact');
+  console.log( 'newContact' );
 
+  var name = newContact.name
+  var lastName = newContact.lastName;
+  var company = newContact.company;
+  var phone = newContact.phone;
+  var email = newContact.email;
 
   if( !name || /\d/.test(name) )   {
     res.status(500).send(`Error in name: ${name}`);
