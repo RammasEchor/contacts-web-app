@@ -32,7 +32,7 @@ router.post('/db', async function (req, res, next) {
     return;
   }
 
-  if (company && !(/^[A-Za-z0-9\s]+$/.test(company))) {
+  if (company && !(/^[A-Za-z0-9\s\.]+$/.test(company))) {
     res.status(500).send(`Error in company: ${company}`);
     return;
   }
