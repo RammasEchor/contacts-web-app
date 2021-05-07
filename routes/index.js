@@ -49,8 +49,15 @@ router.post('/db', async function (req, res, next) {
 
   try {
     const client = await pool.connect();
-    var queryString = `INSERT INTO contacts(userId, name, lastName, company, phone, email) 
+    if( !phone )  {
+      var queryString = `INSERT INTO contacts(userId, name, lastName, company, phone, email) 
+                        VALUES ('${0}', '${name}', '${lastName}', '${company}', NULL, '${email}')`;
+    }
+    else  {
+      var queryString = `INSERT INTO contacts(userId, name, lastName, company, phone, email) 
                         VALUES ('${0}', '${name}', '${lastName}', '${company}', '${phone}', '${email}')`;
+    }
+    
     const result = await client.query(queryString);
     const results = { 'results': (result) ? result.rows : null };
     res.json({ rows: results });
@@ -112,9 +119,17 @@ router.patch('/db', async function (req, res, next) {
       return;
     }
 
-    var query = `UPDATE contacts SET (name,lastname,company,phone,email) =
+    if( !phone )  {
+      var query = `UPDATE contacts SET (name,lastname,company,phone,email) =
+                  ('${name}','${lastName}','${company}',NULL,'${email}')
+                  WHERE email = '${originalEmail}'`;
+    }
+    else  {
+      var query = `UPDATE contacts SET (name,lastname,company,phone,email) =
                   ('${name}','${lastName}','${company}','${phone}','${email}')
                   WHERE email = '${originalEmail}'`;
+    }
+    
   }
   else {
     var mail = req.body.updatedContact.mail;
